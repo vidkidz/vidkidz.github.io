@@ -32,7 +32,7 @@ const loadSwfByFile = (Module, file) => {
                 Module.HEAP8.set(uint8Array, buf);
                 let res = Module.ccall('reopenBuffer',
                     'int',
-                    ['string', 'number', 'number'],  // name, data, size
+                    ['string', 'number', 'number'],
                     [file.name, buf, uint8Array.length]);
                 Module._free(buf);
                 if (res == 0) {
