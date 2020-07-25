@@ -20,7 +20,7 @@ const loadSwfbyUrl = (Module, url) => {
 }
 
 const loadSwfByFile = (Module, file) => {
-    if (file.size < (100 * 1024 * 1024)) {
+    if (file.size < (256 * 1024 * 1024)) {
         const reader = new FileReader();
         reader.onload = function (loadEvent) {
             console.log('WAFLASH> file loaded!')
