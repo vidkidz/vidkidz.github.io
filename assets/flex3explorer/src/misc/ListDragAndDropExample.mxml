@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+
+		<mx:Model id="fruits">
+      <fruits>
+        <fruit label="apple" data="apple"/>
+        <fruit label="strawberry" data="strawberry"/>
+        <fruit label="cherry" data="cherry"/>
+      </fruits>
+    </mx:Model>
+    
+		<mx:Model id="vegetables">
+      <vegetables>
+        <vegetable label="salad" data="salad"/>
+        <vegetable label="tomato" data="tomato"/>
+        <vegetable label="paprika" data="paprika"/>
+      </vegetables>
+    </mx:Model>    
+
+    <mx:Panel title="List Drag and Drop Example"
+        height="75%" width="75%" layout="horizontal"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+	    <mx:HBox>
+	        <mx:VBox>
+	            <mx:Label text="fruits"/>
+	            <mx:List id="fruitList" height="100" allowMultipleSelection="true"
+	                dragEnabled="true" dropEnabled="true" dragMoveEnabled="true"
+	                dataProvider="{fruits.fruit}"/>
+	        </mx:VBox>
+	
+	        <mx:VBox>
+	            <mx:Label text="vegetables"/>
+	            <mx:List id="vegetableList" height="100" allowMultipleSelection="true"
+	                dragEnabled="true" dropEnabled="true" dragMoveEnabled="true"
+	                dataProvider="{vegetables.vegetable}"/>
+	        </mx:VBox>
+	    </mx:HBox>
+		</mx:Panel>
+</mx:Canvas>

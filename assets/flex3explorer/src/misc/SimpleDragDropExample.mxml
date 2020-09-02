@@ -1,0 +1,155 @@
+<?xml version="1.0" ?> 
+<!--  charts/MakeChartFromDragDrop.mxml --> 
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="initApp()" width="400" height="400">
+    <mx:Style>
+    </mx:Style>
+
+    <mx:Script>
+    <![CDATA[ 
+        import mx.collections.ArrayCollection;
+
+        import mx.charts.chartClasses.ChartBase;
+        import mx.charts.ChartItem;
+        import mx.charts.PieChart;
+        import mx.charts.series.PieSeries;
+        import mx.charts.events.ChartItemEvent;
+
+        import mx.events.DragEvent;
+        import mx.controls.List;
+        import mx.managers.DragManager;
+        import mx.core.DragSource;
+
+        [Bindable]
+        public var newDataProviderAC:ArrayCollection;
+        
+        [Bindable]
+        private var expensesAC:ArrayCollection = new ArrayCollection([
+            { Month: "Jan", Expenses: 1500 },
+            { Month: "Feb", Expenses: 200 },
+            { Month: "Mar", Expenses: 500 },
+            { Month: "Apr", Expenses: 1200 },
+            { Month: "May", Expenses: 575 } ]);
+        
+        private function initApp():void {
+            setupPieChart();
+        }
+        
+        private var newChart:PieChart;
+        private var newSeries:PieSeries;
+        
+        [Bindable]
+        private var explodedPiece:Array;
+
+        private function explodePiece(e:Event):void {
+            explodedPiece = new Array();           
+            explodedPiece[newSeries.selectedIndex] = .2;
+            newSeries.perWedgeExplodeRadius = explodedPiece;
+        }
+
+        private function setupPieChart():void {     
+            newChart  = new PieChart();
+            newChart.showDataTips = true;            
+            newChart.selectionMode = "multiple";
+            newChart.dropEnabled= true;
+            newChart.dragEnabled= false;
+            
+            newChart.height = 350;
+            newChart.width = 350;
+            
+            newChart.addEventListener("dragEnter", doDragEnter);
+            newChart.addEventListener("dragDrop", doDragDrop);
+
+            newChart.dataProvider = newDataProviderAC;
+
+            newSeries = new PieSeries();
+            newSeries.field = "Expenses";
+            newSeries.nameField = "Month";
+            newSeries.setStyle("labelPosition", "callout");
+            newSeries.setStyle("showDataEffect", "interpol");
+
+            var newSeriesArray:Array = new Array();
+            newSeriesArray.push(newSeries);
+            newChart.series = newSeriesArray;
+
+            newChart.addEventListener(ChartItemEvent.CHANGE, explodePiece);
+
+            p2.addChild(newChart);
+        }
+
+        private function doDragEnter(event:DragEvent):void {
+            // Get a reference to the target chart.
+            var dragTarget:ChartBase = ChartBase(event.currentTarget);
+
+            // Register the target chart with the DragManager.
+            DragManager.acceptDragDrop(dragTarget);
+        }
+
+        private function doDragDrop(event:DragEvent):void {
+            // Get a reference to the target chart.
+            var dropTarget:ChartBase=ChartBase(event.currentTarget);
+
+            // Get the dragged items from the drag initiator. When getting 
+            // items from chart controls, you must use the 'chartitems' 
+            // format.
+            var items:Array = event.dragSource.dataForFormat("chartitems") 
+                as Array;
+
+            // Trace status messages.
+            trace("length: " + String(items.length));
+            trace("format: " + String(event.dragSource.formats[0]));
+    
+            // Add each item to the drop target's data provider.
+            for(var i:uint=0; i < items.length; i++) {
+                
+                // If the target data provider already contains the
+                // item, then do nothing.
+                if (dropTarget.dataProvider.contains(items[i].item)) {
+                
+                // If the target data provider does NOT already
+                // contain the item, then add it.
+                } else {
+                    dropTarget.dataProvider.addItem(items[i].item);                
+                }                
+            }
+        }
+    ]]> 
+    </mx:Script>   
+    
+    <mx:SeriesInterpolate id="interpol" 
+        duration="1000" 
+        elementOffset="0" 
+        minimumElementDuration="200"
+    />
+
+		<mx:Panel title="Simple DragDropExample"
+        height="100%" width="100%" layout="horizontal"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        
+	    <mx:Panel id="p1" title="Source Chart" height="100%" width="50%">
+	        <mx:ColumnChart id="myColumnChart" 
+	            height="100%" 
+	            width="100%" 
+	            showDataTips="true" 
+	            dataProvider="{expensesAC}" 
+	            selectionMode="multiple"
+	            dragEnabled="true" 
+	            dropEnabled="false"
+	        >
+	            <mx:series>
+	                <mx:ColumnSeries id="series1" 
+	                    yField="Expenses" 
+	                    displayName="Expenses" 
+	                    selectable="true"
+	                /> 
+	            </mx:series>            
+	            <mx:horizontalAxis>
+	                <mx:CategoryAxis categoryField="Month"/>
+	            </mx:horizontalAxis>                        
+	        </mx:ColumnChart>
+	    </mx:Panel>
+	    
+	    <!-- This will be the parent of the soon-to-be created chart. -->
+	    <mx:Panel id="p2" title="Target Chart" height="100%" width="50%">
+	    </mx:Panel>
+    </mx:Panel>
+</mx:Canvas>

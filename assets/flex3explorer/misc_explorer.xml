@@ -1,0 +1,18 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<compTree>
+        <node label="Misc">
+        	<node label="AdvancedDataGrid">
+						<node label="Grouped AdvancedDataGrid" app="misc/AdvancedDataGridGroupExample">
+	        	</node>
+	        </node>
+        	<node label="Charts">
+						<node label="DragDropExample" app="misc/SimpleDragDropExample">
+	        	</node>
+	        </node>	 	  
+        	<node label="List">
+						<node label="DragDropExample" app="misc/ListDragAndDropExample">
+	        	</node>
+	        </node>	        
+	     	</node>
+</compTree>

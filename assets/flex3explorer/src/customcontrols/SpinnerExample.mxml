@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- Simple example to demonstrate the Custom Spinner Control. -->
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:customcontrols="http://www.borland.com/fastxd/customcontrols">
+
+    <mx:Panel title="Spinner Control Example" height="75%" width="75%" 
+        paddingTop="10" paddingLeft="10">
+        <mx:Text width="100%" color="blue"
+            text="Spinner control with a lowerBound=5, upperBound=15, stepSize=1 and value=5."/>
+        <customcontrols:Spinner id="spinner" lowerBound="5" upperBound="15" stepSize="1" value="5"
+        							increment="incrementHandler(event)"
+											decrement="decrementHandler(event)"/>
+        
+				<!--<mx:TextArea id="text" width="300" height="200"/>-->
+				<mx:Label id="text" color="blue" text="" />
+    </mx:Panel>
+    
+    <mx:Script>
+        <![CDATA[
+        		import mx.events.FlexEvent;
+            import flash.events.Event;
+            import com.borland.fastxd.customcontrols.SpinnerEvent;
+             
+            private function incrementHandler(event : SpinnerEvent)  : void {
+							text.text = 'Increment [Stepsize= ' + event.steps + ', value = ' + spinner.value.toString() +']';
+            }  
+            
+            private function decrementHandler(event : SpinnerEvent)  : void {
+							text.text = 'Decrement [Stepsize= ' + event.steps + ', value = ' + spinner.value.toString() +']';
+            }  
+    	]]>
+		</mx:Script>
+    
+</mx:Canvas>
+       

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="300">
+
+    <mx:Array id="planets">
+        <mx:Object planet="Mercury" kind="Terrestrial"
+            year_duration="0.24" moons="0" cost="1250" />
+        <mx:Object planet="Venus" kind="Terrestrial"
+            year_duration="0.62" moons="0" cost="2400" />
+        <mx:Object planet="Jupiter" kind="Gas giant"
+            year_duration="11.86" moons="63" cost="500" />
+        <mx:Object planet="Neptune" kind="Gas giant"
+            year_duration="164.8" moons="13" cost="3000" />
+        <mx:Object planet="Ceres" kind="Ice dwarf"
+            year_duration="4.60" moons="0" cost="4000" />
+        <mx:Object planet="Pluto" kind="Ice dwarf"
+            year_duration="248.09" moons="3" cost="4500" />
+        <mx:Object planet="Eris" kind="Ice dwarf"
+            year_duration="557" moons="1" cost="3000" />
+    </mx:Array>
+
+    <mx:Panel title="AdvancedDataGridGroup Control Example"
+        height="75%" width="75%" layout="horizontal"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        
+	    <mx:AdvancedDataGrid
+	            id="adg"
+	            dataProvider="{planets}"
+	            width="100%" height="100%" 
+	            variableRowHeight="true"
+	            wordWrap="true">
+	
+	        <mx:groupedColumns>
+	
+	            <mx:AdvancedDataGridColumn dataField="planet"
+	                                       headerText="Planet" />
+	
+	                <mx:AdvancedDataGridColumnGroup id="details"
+	                    headerText="Details"
+	                    textAlign="center">
+	                <mx:AdvancedDataGridColumn dataField="kind"
+	                                           headerText="Kind" />
+	                <mx:AdvancedDataGridColumn dataField="year_duration"
+	                                           headerText="Year" />
+	                <mx:AdvancedDataGridColumn dataField="moons"
+	                                           headerText="Moons" />
+	            </mx:AdvancedDataGridColumnGroup>
+	
+	            <mx:AdvancedDataGridColumn dataField="cost"
+	                                       headerText="Cost" />
+	
+	        </mx:groupedColumns>
+	
+	    </mx:AdvancedDataGrid>
+		</mx:Panel>
+</mx:Canvas>
